@@ -51,7 +51,6 @@ router.post("/register", async (req, res, next) => {
           html: `
               <img src="cid:nainarmy432@gmail.com" width="400" />
               <h1>Hi ${Users.name},</h1>
-              <h3>Password ${passwordss}</h3>
               <h3>Your Registration is Successfull!</h3>
              <h5>Your password will be the first four letters of your name (capitalized first letter), followed by '@', and the date and month of your birth.<br />
              For example, if your name is David Rake and your DOB is 27-08-1997, your password will be Davi@2708. </h5>
