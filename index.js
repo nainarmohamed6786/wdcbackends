@@ -18,6 +18,8 @@ app.use("/files", express.static(path.join(__dirname, "/files")));
 app.use("/abstract", express.static(path.join(__dirname, "/abstract")));
 app.use("/Resume", express.static(path.join(__dirname, "/Resume")));
 app.use("/photo", express.static(path.join(__dirname, "/photo")));
+app.use("/cv", express.static(path.join(__dirname, "/cv")));
+app.use("/biography", express.static(path.join(__dirname, "/biography")));
 
 mongoose.set("strictQuery", false);
 mongoose.connect(
@@ -95,6 +97,34 @@ const storages2 = multer.diskStorage({
 
 const uploads2 = multer({ storage: storages2 });
 app.post("/api/photo", uploads2.single("file"), (req, res) => {
+  res.status(200).json("File has been uploaded");
+});
+
+const storages3 = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "cv");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const uploads3 = multer({ storage: storages3 });
+app.post("/api/cv", uploads3.single("file"), (req, res) => {
+  res.status(200).json("File has been uploaded");
+});
+
+const storages4 = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "biography");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const uploads4 = multer({ storage: storages4 });
+app.post("/api/biography", uploads4.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 

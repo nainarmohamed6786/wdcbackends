@@ -87,7 +87,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    biography: {
+    biographyFiles: {
       type: String,
       default: "",
     },
@@ -103,6 +103,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    CVFiles: {
+      type: String,
+      default: null,
+    },
+
     payment_date: {
       type: Date,
       default: Date.now,
