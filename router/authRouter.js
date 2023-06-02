@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
   try {
-    const username = req.body.name.slice(0, 4);
+    const username = req.body.email.slice(0, 4);
     const age = req.body.age.slice(8, 10) + req.body.age.slice(5, 7);
 
     const passwordss = username + "@" + age;
@@ -51,8 +51,8 @@ router.post("/register", async (req, res, next) => {
           html: `
               <img src="cid:nainarmy432@gmail.com" width="400" />
               <h1>Hi ${Users.name},</h1>
-              <h3> Your Login Password ${passwordss}</h3>
-              <h3>Your Registration is Successfull!</h3>
+              <h3>Your Registration is Successfull!</h3><br>
+              <h4> Your Login Password ${passwordss}</h4><br>
              <h5>Your password will be the first four letters of your name (capitalized first letter), followed by '@', and the date and month of your birth.<br />
              For example, if your name is David Rake and your DOB is 27-08-1997, your password will be Davi@2708. </h5>
           
