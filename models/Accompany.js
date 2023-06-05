@@ -2,15 +2,17 @@ const mongoose = require("mongoose");
 
 const majorSchema = mongoose.Schema(
   {
-    inputFields:[{
-      fullName:String,
-      emailAddress:String,
-    }],
-    email:{
-      type:String,
-      default:""
+    inputFields: [
+      {
+        fullName: String,
+        emailAddress: String,
+        required: true,
+      },
+    ],
+    email: {
+      type: String,
+      default: "",
     },
-  
   },
   { timestamps: true }
 );
