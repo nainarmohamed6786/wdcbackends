@@ -135,7 +135,7 @@ app.use("/award", AwardRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hii this is a backend check");
-});
+});   
 
 app.listen(process.env.PORT, (err) => {
   if (err) {

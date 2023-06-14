@@ -1,12 +1,18 @@
 const mongoose = require("mongoose");
 
-const majorSchema = mongoose.Schema(
+const majorSchema =new mongoose.Schema(
   {
     inputFields: [
       {
-        fullName: String,
-        emailAddress: String,
-        required: true,
+        fullName: {
+          type: String,
+          required: true,
+        },
+
+        emailAddress: {
+          type: String,
+          required: true,
+        },
       },
     ],
     email: {
