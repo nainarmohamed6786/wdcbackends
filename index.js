@@ -11,7 +11,7 @@ const Major = require("./router/MajorRoutes");
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob');
 const userRoutes = require("./router/userRoutes");
 const AwardRoutes = require("./router/AwardRoutes");
-
+// const Routes = require("./router/paymentData.js");
 
 // const __dirname=path.resolve();
 const app = express();
@@ -51,23 +51,23 @@ app.use(cors());
 app.use(express.static("public"));
 
 
-// Azure Storage account name
-const accountName = 'jokarcreationswebstorage';
-// Azure Storage account key
-const accountKey = 'SMTuCO15W/G4S5cYwaObTUIl3vFnr9SI2kzORgkcoQIUPcS1orNndootDTXe65qFnhnlbo0WRrF4+ASt8Sl+hw==';
-// Name of the container in Azure Storage
-const filename = 'wdc2023files';
-const abstract = 'wdc2023abstract';
-const cv = 'wdc2023cv';
-const biography = 'wdc2023biography';
-const photo = 'wdc2023photo';
-const resume = 'wdc2023resume';
+// // Azure Storage account name
+// const accountName = 'jokarcreationswebstorage';
+// // Azure Storage account key
+// const accountKey = 'SMTuCO15W/G4S5cYwaObTUIl3vFnr9SI2kzORgkcoQIUPcS1orNndootDTXe65qFnhnlbo0WRrF4+ASt8Sl+hw==';
+// // Name of the container in Azure Storage
+// const filename = 'wdc2023files';
+// const abstract = 'wdc2023abstract';
+// const cv = 'wdc2023cv';
+// const biography = 'wdc2023biography';
+// const photo = 'wdc2023photo';
+// const resume = 'wdc2023resume';
 
-// Create a shared key credential using your account name and key
-const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
+// // Create a shared key credential using your account name and key
+// const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
 
-// Create a BlobServiceClient object
-const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net`, sharedKeyCredential);
+// // Create a BlobServiceClient object
+// const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net`, sharedKeyCredential);
 
 
 
@@ -82,36 +82,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), async(req, res) => {
-  try {
-    // Get the file from the request
-    const file = req.file;
-  
-
-    // Get a reference to the container
-    const containerClient = blobServiceClient.getContainerClient(filename);
-
-    // Create the container if it doesn't exist
-    const createContainerResponse = await containerClient.createIfNotExists();
-
-    if (createContainerResponse.succeeded) {
-      console.log('Container created successfully.');
-    }
-
-    // Get a reference to the blob
-    const blobName = file.originalname;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
-    // Upload the file to Azure Storage Blob
-    const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
-    // Delete the temporary file
-    // fs.unlinkSync(file.path);
-
-    res.status(200).send('File uploaded successfully.');
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    res.status(500).send('An error occurred while uploading the file.');
-  }
+  res.status(200).json("Upload file successfully")
 
 });
 
@@ -127,36 +98,7 @@ const storages = multer.diskStorage({
 const uploads = multer({ storage: storages });
 app.post("/api/document", uploads.single("file"), async(req, res) => {
 
-  try {
-    // Get the file from the request
-    const file = req.file;
-  
-
-    // Get a reference to the container
-    const containerClient = blobServiceClient.getContainerClient(abstract);
-
-    // Create the container if it doesn't exist
-    const createContainerResponse = await containerClient.createIfNotExists();
-
-    if (createContainerResponse.succeeded) {
-      console.log('Container created successfully.');
-    }
-
-    // Get a reference to the blob
-    const blobName = file.originalname;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
-    // Upload the file to Azure Storage Blob
-    const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
-    // Delete the temporary file
-    // fs.unlinkSync(file.path);
-
-    res.status(200).send('File uploaded successfully.');
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    res.status(500).send('An error occurred while uploading the file.');
-  }
+  res.status(200).json("Upload file successfully")
 
 });
 
@@ -171,37 +113,7 @@ const storages1 = multer.diskStorage({
 
 const uploads1 = multer({ storage: storages1 });
 app.post("/api/resume", uploads1.single("file"), async(req, res) => {
-
-  try {
-    // Get the file from the request
-    const file = req.file;
-  
-
-    // Get a reference to the container
-    const containerClient = blobServiceClient.getContainerClient(resume);
-
-    // Create the container if it doesn't exist
-    const createContainerResponse = await containerClient.createIfNotExists();
-
-    if (createContainerResponse.succeeded) {
-      console.log('Container created successfully.');
-    }
-
-    // Get a reference to the blob
-    const blobName = file.originalname;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
-    // Upload the file to Azure Storage Blob
-    const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
-    // Delete the temporary file
-    // fs.unlinkSync(file.path);
-
-    res.status(200).send('File uploaded successfully.');
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    res.status(500).send('An error occurred while uploading the file.');
-  }
+  res.status(200).json("Upload file successfully")
 
 });
 
@@ -216,36 +128,7 @@ const storages2 = multer.diskStorage({
 
 const uploads2 = multer({ storage: storages2 });
 app.post("/api/photo", uploads2.single("file"), async(req, res) => {
-  try {
-    // Get the file from the request
-    const file = req.file;
-  
-
-    // Get a reference to the container
-    const containerClient = blobServiceClient.getContainerClient(photo);
-
-    // Create the container if it doesn't exist
-    const createContainerResponse = await containerClient.createIfNotExists();
-
-    if (createContainerResponse.succeeded) {
-      console.log('Container created successfully.');
-    }
-
-    // Get a reference to the blob
-    const blobName = file.originalname;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
-    // Upload the file to Azure Storage Blob
-    const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
-    // Delete the temporary file
-    // fs.unlinkSync(file.path);
-
-    res.status(200).send('File uploaded successfully.');
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    res.status(500).send('An error occurred while uploading the file.');
-  }
+  res.status(200).json("Upload file successfully")
 
 });
 
@@ -260,37 +143,7 @@ const storages3 = multer.diskStorage({
 
 const uploads3 = multer({ storage: storages3 });
 app.post("/api/cv", uploads3.single("file"), async(req, res) => {
-
-  try {
-    // Get the file from the request
-    const file = req.file;
-  
-
-    // Get a reference to the container
-    const containerClient = blobServiceClient.getContainerClient(cv);
-
-    // Create the container if it doesn't exist
-    const createContainerResponse = await containerClient.createIfNotExists();
-
-    if (createContainerResponse.succeeded) {
-      console.log('Container created successfully.');
-    }
-
-    // Get a reference to the blob
-    const blobName = file.originalname;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
-    // Upload the file to Azure Storage Blob
-    const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
-    // Delete the temporary file
-    // fs.unlinkSync(file.path);
-
-    res.status(200).send('File uploaded successfully.');
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    res.status(500).send('An error occurred while uploading the file.');
-  }
+  res.status(200).json("Upload file successfully")
 
 });
 
@@ -305,45 +158,14 @@ const storages4 = multer.diskStorage({
 
 const uploads4 = multer({ storage: storages4 });
 app.post("/api/biography", uploads4.single("file"), async(req, res) => {
-
-  try {
-    // Get the file from the request
-    const file = req.file;
-  
-
-    // Get a reference to the container
-    const containerClient = blobServiceClient.getContainerClient(biography);
-
-    // Create the container if it doesn't exist
-    const createContainerResponse = await containerClient.createIfNotExists();
-
-    if (createContainerResponse.succeeded) {
-      console.log('Container created successfully.');
-    }
-
-    // Get a reference to the blob
-    const blobName = file.originalname;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
-    // Upload the file to Azure Storage Blob
-    const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
-    // Delete the temporary file
-    // fs.unlinkSync(file.path);
-
-    res.status(200).send('File uploaded successfully.');
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    res.status(500).send('An error occurred while uploading the file.');
-  }
-  
+  res.status(200).json("Upload file successfully")
 });
 
 app.use("/router", authRouter);
 app.use("/major", Major);
 app.use("/routes", userRoutes);
 app.use("/award", AwardRoutes);
-
+// app.use("/", Routes);
 
 app.get("/", (req, res) => {
   res.send("Hii this is a backend check");
