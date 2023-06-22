@@ -11,7 +11,7 @@ const Major = require("./router/MajorRoutes");
 const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob');
 const userRoutes = require("./router/userRoutes");
 const AwardRoutes = require("./router/AwardRoutes");
-// const Routes = require("./router/paymentData.js");
+const Routes = require("./router/paymentData.js");
 
 // const __dirname=path.resolve();
 const app = express();
@@ -165,7 +165,7 @@ app.use("/router", authRouter);
 app.use("/major", Major);
 app.use("/routes", userRoutes);
 app.use("/award", AwardRoutes);
-// app.use("/", Routes);
+app.use("/", Routes);
 
 app.get("/", (req, res) => {
   res.send("Hii this is a backend check");

@@ -27,57 +27,7 @@ router.post("/register", async (req, res, next) => {
       password: hash,
     });
 
-    const savedUser = await Users.save();
-
-    console.log(username);
-    console.log(age);
-    if (savedUser) {
-      const main = async () => {
-        let transporter = nodemailer.createTransport({
-          host: "smtp.gmail.com",
-          port: 465,
-          secure: true,
-          auth: {
-            user: "worlddentistsassociation@gmail.com",
-            pass: "qbtsyfcbzilnbbwf",
-            // ⚠️ Use environment variables set on the server for these values when deploying
-          },
-        });
-
-        let info = await transporter.sendMail({
-          from: '"worlddentistsassociation@gmail.com',
-          to: `${Users.email}`,
-          subject: "Congraluations! Succesfully Registered to WDC 2023",
-          html: `
-              <img src="cid:nainarmy432@gmail.com" width="400" />
-              <h1>Hi ${Users.name},</h1>
-              <h3>Your Registration is Successfull!</h3>
-              <h4> Your Login Password ${passwordss}</h4>
-             <h5>Your password will be the first four letters of your name (capitalized first letter), followed by '@', and the date and month of your birth.<br />
-             For example, if your name is David Rake and your DOB is 27-08-1997, your password will be Davi@2708. </h5>
-          
-              `, // Embedded image links to content ID
-          attachments: [
-            {
-              filename: "WDC-Broucher-Bangkok-2023.pdf",
-              path: "./WDC-Broucher-Bangkok-2023.pdf",
-              cid: "nainarmy412@gmail.com", // Sets content ID
-            },
-            {
-              filename: "poster.png",
-              path: "./poster.png",
-              cid: "nainarmy432@gmail.com", // Sets content ID
-            },
-          ],
-        });
-
-        console.log(info.messageId);
-      };
-
-      main();
-    }
-
-    console.log(savedUser);
+    const savedUser = await Users.save(); 
 
     res.status(200).json(savedUser);
   } catch (err) {
