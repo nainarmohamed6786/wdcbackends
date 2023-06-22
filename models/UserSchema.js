@@ -4,8 +4,6 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      unique: true,
-      required: true,
     },
     age: {
       type: String,
@@ -17,7 +15,6 @@ const userSchema = new mongoose.Schema(
     },
     Institution: {
       type: String,
-      default: "",
     },
     yearofStudy: {
       type: String,
@@ -40,8 +37,6 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
-      required: true,
     },
     isAdmin: {
       type: Boolean,
@@ -107,7 +102,55 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-
+    STATUS:{
+      type:String,
+      default:"",
+    },
+    ORDER_ID:{
+      type:String,
+      default:""
+    },
+    TXNID:{
+      type:String,
+      default:""
+    },
+    BANKTXNID:{
+      type:String,
+      default:""
+    },
+    TXNTYPE:{
+      type:String,
+      default:""
+    },
+    GATEWAYNAME:{
+      type:String,
+      default:""
+    },
+    RESPCODE:{
+      type:String,
+      default:""
+    },
+    RESPMSG:{
+      type:String,
+      default:""
+    },
+    BANKNAME:{
+      type:String,
+      default:""
+    },
+    PAYMENTMODE:{
+      type:String,
+      default:""
+    },
+    REFUNDAMT:{
+      type:String,
+      default:""
+    },
+    TXNDATE:{
+      type:String,
+      default:""
+    },
+  
     payment_date: {
       type: Date,
       default: Date.now,
@@ -117,3 +160,10 @@ const userSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("RegisterDetail", userSchema);
+
+
+
+
+
+
+
