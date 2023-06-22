@@ -11,23 +11,25 @@ const router = express.Router();
 router.post("/register", async (req, res, next) => {
   try {
     const username = req.body.email.slice(0, 4);
-    const age = req.body.age.slice(8, 10) + req.body.age.slice(5, 7);
+    // const age = req.body.age.slice(8, 10) + req.body.age.slice(5, 7);
 
-    const passwordss = username + "@" + age;
+    const passwordss = username + "@";
 
     console.log(passwordss);
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(passwordss, salt);
 
-    req.body.password = username + age;
+    req.body.password = username;
 
     const Users = new userSchema({
       ...req.body,
       password: hash,
     });
 
-    const savedUser = await Users.save(); 
+    const savedUser = await Users.save();
+
+    console.log(savedUser);
 
     res.status(200).json(savedUser);
   } catch (err) {
@@ -35,6 +37,7 @@ router.post("/register", async (req, res, next) => {
     console.log(err);
   }
 });
+
 
 router.post("/login", async (req, res, next) => {
   try {

@@ -1,10 +1,8 @@
-const express=require('express');
-const dotenv=require('dotenv');
-const Razorpay=require('razorpay');
-
+const express = require("express");
+const dotenv = require("dotenv");
+const Razorpay = require("razorpay");
 
 dotenv.config();
-
 
 const router = express.Router();
 
@@ -37,4 +35,4 @@ router.post("/", (req, res) => {
     });
 });
 
-module.exports=router;
+module.exports = router;

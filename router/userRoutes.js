@@ -84,6 +84,20 @@ router.get("/countUpload", async (req, res, next) => {
   }
 });
 
+//txt success
+
+router.get("/countSuccess", async (req, res, next) => {
+  try {
+    const SpeakerCount = await userSchema.count({
+      STATUS: "TXN_SUCCESS",
+    });
+
+    res.status(200).json([{ STATUS: "TXN_SUCCESS", count: SpeakerCount }]);
+  } catch (err) {
+    next(err);
+  }
+});
+
 //null count
 
 router.get("/counts", async (req, res) => {

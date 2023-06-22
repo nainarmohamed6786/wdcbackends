@@ -51,23 +51,23 @@ app.use(cors());
 app.use(express.static("public"));
 
 
-// // Azure Storage account name
-// const accountName = 'jokarcreationswebstorage';
-// // Azure Storage account key
-// const accountKey = 'SMTuCO15W/G4S5cYwaObTUIl3vFnr9SI2kzORgkcoQIUPcS1orNndootDTXe65qFnhnlbo0WRrF4+ASt8Sl+hw==';
-// // Name of the container in Azure Storage
-// const filename = 'wdc2023files';
-// const abstract = 'wdc2023abstract';
-// const cv = 'wdc2023cv';
-// const biography = 'wdc2023biography';
-// const photo = 'wdc2023photo';
-// const resume = 'wdc2023resume';
+// Azure Storage account name
+const accountName = 'jokarcreationswebstorage';
+// Azure Storage account key
+const accountKey = 'SMTuCO15W/G4S5cYwaObTUIl3vFnr9SI2kzORgkcoQIUPcS1orNndootDTXe65qFnhnlbo0WRrF4+ASt8Sl+hw==';
+// Name of the container in Azure Storage
+const filename = 'wdc2023files';
+const abstract = 'wdc2023abstract';
+const cv = 'wdc2023cv';
+const biography = 'wdc2023biography';
+const photo = 'wdc2023photo';
+const resume = 'wdc2023resume';
 
-// // Create a shared key credential using your account name and key
-// const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
+// Create a shared key credential using your account name and key
+const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
 
-// // Create a BlobServiceClient object
-// const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net`, sharedKeyCredential);
+// Create a BlobServiceClient object
+const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net`, sharedKeyCredential);
 
 
 
@@ -82,8 +82,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), async(req, res) => {
-  res.status(200).json("Upload file successfully")
 
+  res.status(200).json("Upload file successfully")
 });
 
 const storages = multer.diskStorage({

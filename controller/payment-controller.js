@@ -44,7 +44,7 @@ const addPaymentGateway = async (request, response) => {
     (paytmParams["INDUSTRY_TYPE_ID"] = process.env.INDUSTRY_TYPE_ID),
     (paytmParams["ORDER_ID"] = uuid()),
     (paytmParams["CUST_ID"] = "Cust_id"),
-    (paytmParams["CALLBACK_URL"] = "https://wdc-back.onrender.com/callback");
+    (paytmParams["CALLBACK_URL"] = "http://localhost:4119/callback");
   //   paytmParams["MOBILE_NO"] = phoneNumber;
   paytmParams["TXN_AMOUNT"] = request.body.amount;
 
@@ -85,7 +85,7 @@ const addPaymentGateway = async (request, response) => {
     };
     response.json(params);
 
-    axios.post("https://wdc-back.onrender.com/router/register", params, {
+    axios.post("http://localhost:4119/router/register", params, {
       "content-type": "application/json",
     });
 
@@ -349,7 +349,7 @@ const paymentResponse = (request, response) => {
               );
             }
 
-            response.redirect(`https://worlddentalconference.co.in/registration/`);
+            response.redirect(`https://worlddentalconference.co.in/registration`);
           });
         });
 

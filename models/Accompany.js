@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const majorSchema =new mongoose.Schema(
+const majorSchema = mongoose.Schema(
   {
     inputFields: [
       {

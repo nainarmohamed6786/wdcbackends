@@ -159,11 +159,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("RegisterDetail", userSchema);
-
-
-
-
-
-
-
+module.exports = mongoose.model("capslocks", userSchema);
