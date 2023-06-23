@@ -8,7 +8,7 @@ const authRouter = require("./router/authRouter");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const Major = require("./router/MajorRoutes");
-const { BlobServiceClient, StorageSharedKeyCredential } = require('@azure/storage-blob');
+const { BlobServiceClient } = require('@azure/storage-blob');
 const userRoutes = require("./router/userRoutes");
 const AwardRoutes = require("./router/AwardRoutes");
 const Routes = require("./router/paymentData.js");
@@ -22,6 +22,8 @@ app.use("/Resume", express.static(path.join(__dirname, "/Resume")));
 app.use("/photo", express.static(path.join(__dirname, "/photo")));
 app.use("/cv", express.static(path.join(__dirname, "/cv")));
 app.use("/biography", express.static(path.join(__dirname, "/biography")));
+
+
 
 mongoose.set("strictQuery", false);
 mongoose.connect(
@@ -51,24 +53,21 @@ app.use(cors());
 app.use(express.static("public"));
 
 
-// Azure Storage account name
-const accountName = 'jokarcreationswebstorage';
-// Azure Storage account key
-const accountKey = 'SMTuCO15W/G4S5cYwaObTUIl3vFnr9SI2kzORgkcoQIUPcS1orNndootDTXe65qFnhnlbo0WRrF4+ASt8Sl+hw==';
+// Azure Storage connection string
+const connectionString = process.env.CONNECTIONSTRING;
 // Name of the container in Azure Storage
-const filename = 'wdc2023files';
-const abstract = 'wdc2023abstract';
-const cv = 'wdc2023cv';
-const biography = 'wdc2023biography';
-const photo = 'wdc2023photo';
-const resume = 'wdc2023resume';
+const containerName = process.env.CONTAINERNAME;
 
-// Create a shared key credential using your account name and key
-const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
+// const filename = 'wdc2023files';
+// const abstract = 'wdc2023abstract';
+// const cv = 'wdc2023cv';
+// const biography = 'wdc2023biography';
+// const photo = 'wdc2023photo';
+// const resume = 'wdc2023resume';
+
 
 // Create a BlobServiceClient object
-const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net`, sharedKeyCredential);
-
+const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
 
 const storage = multer.diskStorage({
@@ -113,7 +112,31 @@ const storages1 = multer.diskStorage({
 
 const uploads1 = multer({ storage: storages1 });
 app.post("/api/resume", uploads1.single("file"), async(req, res) => {
-  res.status(200).json("Upload file successfully")
+  try {
+    // Get the file from the request
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    // Get a reference to the container
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+
+    // Get a reference to the blob
+    const blobName = file.originalname;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    // Upload the file to Azure Storage Blob
+    const uploadResponse = await blockBlobClient.uploadFile(file.path);
+
+    // // Delete the temporary file
+    // fs.unlinkSync(file.path);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).send('An error occurred while uploading the file.');
+  }
 
 });
 
