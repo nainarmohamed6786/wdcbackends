@@ -14,7 +14,7 @@ const AwardRoutes = require("./router/AwardRoutes");
 const Routes = require("./router/paymentData.js");
 
 // const __dirname=path.resolve();
-const app = express();
+const app = express();  
 dotenv.config();
 app.use("/files", express.static(path.join(__dirname, "/files")));
 app.use("/abstract", express.static(path.join(__dirname, "/abstract")));
