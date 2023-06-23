@@ -52,21 +52,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static("public"));
 
-
-// Azure Storage connection string
 const connectionString = process.env.CONNECTIONSTRING;
-// Name of the container in Azure Storage
+
 const containerName = process.env.CONTAINERNAME;
+const FilesName = process.env.FILES;
+const Abstract = process.env.ABSTRACT;
+const Photo = process.env.PHOTO;
+const CvName = process.env.CV;
+const Biography = process.env.BIOGRAPHY;
 
-// const filename = 'wdc2023files';
-// const abstract = 'wdc2023abstract';
-// const cv = 'wdc2023cv';
-// const biography = 'wdc2023biography';
-// const photo = 'wdc2023photo';
-// const resume = 'wdc2023resume';
-
-
-// Create a BlobServiceClient object
 const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
 
@@ -81,8 +75,31 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), async(req, res) => {
+  try {
+    // Get the file from the request
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
 
-  res.status(200).json("Upload file successfully")
+    // Get a reference to the container
+    const containerClient = blobServiceClient.getContainerClient(FilesName);
+
+    // Get a reference to the blob
+    const blobName = file.originalname;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    // Upload the file to Azure Storage Blob
+    const uploadResponse = await blockBlobClient.uploadFile(file.path);
+
+    // // Delete the temporary file
+    // fs.unlinkSync(file.path);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).send('An error occurred while uploading the file.');
+  }
 });
 
 const storages = multer.diskStorage({
@@ -97,7 +114,31 @@ const storages = multer.diskStorage({
 const uploads = multer({ storage: storages });
 app.post("/api/document", uploads.single("file"), async(req, res) => {
 
-  res.status(200).json("Upload file successfully")
+  try {
+    // Get the file from the request
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    // Get a reference to the container
+    const containerClient = blobServiceClient.getContainerClient(Abstract);
+
+    // Get a reference to the blob
+    const blobName = file.originalname;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    // Upload the file to Azure Storage Blob
+    const uploadResponse = await blockBlobClient.uploadFile(file.path);
+
+    // // Delete the temporary file
+    // fs.unlinkSync(file.path);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).send('An error occurred while uploading the file.');
+  }
 
 });
 
@@ -151,7 +192,32 @@ const storages2 = multer.diskStorage({
 
 const uploads2 = multer({ storage: storages2 });
 app.post("/api/photo", uploads2.single("file"), async(req, res) => {
-  res.status(200).json("Upload file successfully")
+  try {
+    // Get the file from the request
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    // Get a reference to the container
+    const containerClient = blobServiceClient.getContainerClient(Photo);
+
+    // Get a reference to the blob
+    const blobName = file.originalname;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    // Upload the file to Azure Storage Blob
+    const uploadResponse = await blockBlobClient.uploadFile(file.path);
+
+    // // Delete the temporary file
+    // fs.unlinkSync(file.path);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).send('An error occurred while uploading the file.');
+  }
+
 
 });
 
@@ -166,7 +232,31 @@ const storages3 = multer.diskStorage({
 
 const uploads3 = multer({ storage: storages3 });
 app.post("/api/cv", uploads3.single("file"), async(req, res) => {
-  res.status(200).json("Upload file successfully")
+  try {
+    // Get the file from the request
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    // Get a reference to the container
+    const containerClient = blobServiceClient.getContainerClient(CvName);
+
+    // Get a reference to the blob
+    const blobName = file.originalname;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    // Upload the file to Azure Storage Blob
+    const uploadResponse = await blockBlobClient.uploadFile(file.path);
+
+    // // Delete the temporary file
+    // fs.unlinkSync(file.path);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).send('An error occurred while uploading the file.');
+  }
 
 });
 
@@ -181,7 +271,31 @@ const storages4 = multer.diskStorage({
 
 const uploads4 = multer({ storage: storages4 });
 app.post("/api/biography", uploads4.single("file"), async(req, res) => {
-  res.status(200).json("Upload file successfully")
+  try {
+    // Get the file from the request
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+
+    // Get a reference to the container
+    const containerClient = blobServiceClient.getContainerClient(Biography);
+
+    // Get a reference to the blob
+    const blobName = file.originalname;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    // Upload the file to Azure Storage Blob
+    const uploadResponse = await blockBlobClient.uploadFile(file.path);
+
+    // // Delete the temporary file
+    // fs.unlinkSync(file.path);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).send('An error occurred while uploading the file.');
+  }
 });
 
 app.use("/router", authRouter);
