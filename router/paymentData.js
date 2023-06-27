@@ -2,7 +2,7 @@ const express = require("express");
 const {
   addPaymentGateway,
   paymentResponse,
-} = require("../controller/payment-controller.js");
+} = require("../controller/Payment.js");
 
 const router = express.Router();
 

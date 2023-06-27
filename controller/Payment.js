@@ -7,11 +7,9 @@ const axios = require("axios");
 const nodemailer = require("nodemailer");
 const PDFDocument = require("pdfkit");
 const fs = require("fs");
-const { Console } = require("console");
+const alert=require('alert');
 
 const addPaymentGateway = async (request, response) => {
-
-  console.log('1......................................................');
 
   var name = request.body.name;
   var age = request.body.age;
@@ -51,14 +49,12 @@ const addPaymentGateway = async (request, response) => {
     (paytmParams["CALLBACK_URL"] = "http://localhost:4119/callback");
   paytmParams["TXN_AMOUNT"] = request.body.amount;
 
-
-  console.log('2......................................................');
   const paytmCheckSum = await paytmchecksum.generateSignature(
     paytmParams,
     paytmMerchantkey
   );
 
-  console.log('3......................................................');
+
   try {
     const params = {
       ...paytmParams,
@@ -91,68 +87,60 @@ const addPaymentGateway = async (request, response) => {
       CVFiles: CVFiles,
     };
     response.json(params);
-    console.log('4......................................................');
+
     axios.post("http://localhost:4119/router/register", params, {
       "content-type": "application/json",
     });
-    console.log('5......................................................');
+
     console.log(params);
   } catch (error) {
-    console.log('6......................................................');
+
     console.log(error);
   }
 };
 
 const paymentResponse = (request, response) => {
-  console.log('7......................................................');
-  const paytmCheckSum = request.body.CHECKSUMHASH;
-  delete request.body.CHECKSUMHASH;
 
-  const isVerifySignature = paytmchecksum.verifySignature(
-    request.body,
-    process.env.KEY,
-    paytmCheckSum
-  );
-  console.log('8......................................................');
-  if (isVerifySignature) {
-    console.log('9......................................................');
-    let paytmParams = {};
-    paytmParams["MID"] = request.body.MID;
-    paytmParams["ORDERID"] = request.body.ORDERID;
+    const paytmCheckSum = request.body.CHECKSUMHASH;
+    delete request.body.CHECKSUMHASH;
 
-    paytmchecksum
-      .generateSignature(paytmParams, process.env.KEY)
-      .then(function (checksum) {
-        paytmParams["CHECKSUMHASH"] = checksum;
+    const isVerifySignature = paytmchecksum.verifySignature(request.body,
+         'G3UKnpWnWk_TDyu8', paytmCheckSum);
+    if (isVerifySignature) {
+        let paytmParams = {};
+        paytmParams["MID"] = request.body.MID;
+        paytmParams["ORDERID"] = request.body.ORDERID;
 
-        const post_data = JSON.stringify(paytmParams);
+        paytmchecksum.generateSignature(paytmParams, 'G3UKnpWnWk_TDyu8')
+        .then(function (checksum) {
 
-        const options = {
-          hostname: "securegw-stage.paytm.in",
-          port: 443,
-          path: "/order/status",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Content-Length": post_data.length,
-          },
-        };
-        console.log('10......................................................');
-        let res = "";
-        const post_req = https.request(options, function (post_res) {
-          post_res.on("data", function (chunk) {
-            res += chunk;
-          });
-          console.log('11......................................................');
+            paytmParams["CHECKSUMHASH"] = checksum;
 
-          post_res.on("end", function () {
-            let result = JSON.parse(res);
-            console.log('12......................................................');
+            const post_data = JSON.stringify(paytmParams);
+
+            const options = {
+                hostname: 'securegw.paytm.in',
+                port: 443,
+                path: '/order/status',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Content-Length': post_data.length
+                }
+            };
+
+            let res = "";
+            const post_req = https.request(options, function (post_res) {
+                post_res.on('data', function (chunk) {
+                    res += chunk;
+                });
+
+                post_res.on('end', function () {
+                    let result = JSON.parse(res);
             console.log(result.STATUS === "TXN_SUCCESS");
 
             if (result.STATUS === "TXN_SUCCESS") {
               const resultStatus = result.STATUS;
-              console.log('13......................................................');
               var newValues = {
                 $set: {
                   STATUS: resultStatus,
@@ -211,12 +199,12 @@ const paymentResponse = (request, response) => {
                             }
                             
                             function generateHeader(doc) {
-                              doc.image("./logo.png", 50, 115, { width: 50 })
+                              doc.image("./logo.png", 30, 15, { width: 70 })
                                doc
                                .fillColor("#444444")
                                .font("Helvetica-Bold")
                                .fontSize(15)
-                               .text("World Dental Conference 2023", 110, 57,{align:"center"})
+                               .text("World Dental Conference 2023", 10, 57,{align:"center"})
 
                                 .moveDown();
                             }
@@ -313,7 +301,7 @@ const paymentResponse = (request, response) => {
 
                               let info = await transporter.sendMail({
                                 from: '"worlddentistsassociation@gmail.com',
-                                to: `${docs.email}`,
+                                to: `${docs.email},chairman.wdc2023@gmail.com`,
                                 subject:
                                   "Congratulations! Succesfully Registered to WDC 2023",
                                 html: `
@@ -321,8 +309,8 @@ const paymentResponse = (request, response) => {
                                           <h1>Hi ${docs.name},</h1>
                                           <h3>Your Registration is Successfull!</h3>
                                        
-                                         <h5>Your password will be the first four letters of your name (capitalized first letter), followed by '@', and the date and month of your birth.<br />
-                                         For example, if your name is David Rake and your DOB is 27-08-1997, your password will be Davi@2708. </h5>
+                                         <h5>Your password will be the first four letters of your email , followed by '@', and the date and month of your birth.<br />
+                                         For example, if your email is davidrake12@gmail.com and your DOB is 27-08-1997, your password will be davi@2708. </h5>
                                       
                                           `, // Embedded image links to content ID
                                 attachments: [
@@ -357,9 +345,14 @@ const paymentResponse = (request, response) => {
                   }
                 }
               );
+
+              alert("Your Transaction is Successfully ")
+            }
+            else{
+                alert("Your Transaction is Failure")
             }
 
-            response.redirect(`http://localhost:3001/registration`);
+            response.redirect(`http://localhost:3000/registration`);
           });
         });
 
