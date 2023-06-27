@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      default:"",
     },
     age: {
       type: String,
@@ -15,6 +16,7 @@ const userSchema = new mongoose.Schema(
     },
     Institution: {
       type: String,
+      default:"",
     },
     yearofStudy: {
       type: String,
