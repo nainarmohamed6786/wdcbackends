@@ -11,9 +11,9 @@ const router = express.Router();
 router.post("/register", async (req, res, next) => {
   try {
     const username = req.body.email.slice(0, 4);
-    // const age = req.body.age.slice(8, 10) + req.body.age.slice(5, 7);
+    const age = req.body.age.slice(8, 10) + req.body.age.slice(5, 7);
 
-    const passwordss = username + "@";
+    const passwordss = username + "@"+age;
 
     console.log(passwordss);
 
