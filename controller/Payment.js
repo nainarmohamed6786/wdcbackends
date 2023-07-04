@@ -352,7 +352,7 @@ const paymentResponse = (request, response) => {
                 alert("Your Transaction is Failure")
             }
 
-            response.redirect(`http://localhost:3000/registration`);
+            response.redirect(`https://worlddentalconference.co.in/registration`);
           });
         });
 
