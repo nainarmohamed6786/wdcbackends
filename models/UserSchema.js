@@ -36,9 +36,11 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
+      default:"",
     },
     email: {
       type: String,
+      default:"",
     },
     isAdmin: {
       type: Boolean,
@@ -54,6 +56,7 @@ const userSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: Number,
+      default:"",
     },
 
     BasicAmount: {

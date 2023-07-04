@@ -123,7 +123,7 @@ router.get("/countRegister", async (req, res) => {
 });
 
 //delete user
-
+ 
 router.delete("/:id", async (req, res, next) => {
   try {
     await userSchema.findByIdAndDelete(req.params.id);
