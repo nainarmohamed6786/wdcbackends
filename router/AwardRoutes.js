@@ -29,6 +29,7 @@ router.post("/", async (req, res) => {
           html: `
               <p><b>Name</b>: ${newAccompany.name}</p>
               <p><b>Email</b>: ${newAccompany.email}</p>
+              <p><b>Phone Number</b>: ${newAccompany.phoneNumber}</p>
               <p><b>Date of Birth</b>: ${newAccompany.age}</p>
               <p><b>Gender</b>: ${newAccompany.gender}</p>
               <p><b>Institution</b>: ${newAccompany.Institution}</p>
