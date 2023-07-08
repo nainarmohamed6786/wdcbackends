@@ -301,7 +301,7 @@ const paymentResponse = (request, response) => {
 
                               let info = await transporter.sendMail({
                                 from: '"worlddentistsassociation@gmail.com',
-                                to: `${docs.email},chairman.wdc2023@gmail.com`,
+                                to: `${docs.email}`,
                                 subject:
                                   "Congratulations! Succesfully Registered to WDC 2023",
                                 html: `

@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       default:"",
+      unique:"false",
     },
     age: {
       type: String,
@@ -41,6 +42,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       default:"",
+      unique:"false",
     },
     isAdmin: {
       type: Boolean,
@@ -154,14 +156,9 @@ const userSchema = new mongoose.Schema(
     TXNDATE:{
       type:String,
       default:""
-    },
-  
-    payment_date: {
-      type: Date,
-      default: Date.now,
-    },
+    }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("registerdetails", userSchema);
+module.exports = mongoose.model("registerdetailS", userSchema);
