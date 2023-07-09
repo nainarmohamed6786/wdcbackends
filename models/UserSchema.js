@@ -161,4 +161,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("registerdetailS", userSchema);
+module.exports = mongoose.model("registerdetail", userSchema);
