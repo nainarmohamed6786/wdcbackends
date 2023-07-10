@@ -47,7 +47,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-
+  
 router.post("/login", async (req, res, next) => {
   try {
     const user = await userSchema.findOne({ email: req.body.email });
