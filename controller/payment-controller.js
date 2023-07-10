@@ -47,7 +47,7 @@ const addPaymentGateway = async (request, response) => {
     (paytmParams["CHANNEL_ID"] = process.env.CHANNEL_ID),
     (paytmParams["INDUSTRY_TYPE_ID"] = process.env.INDUSTRY_TYPE_ID),
     (paytmParams["ORDER_ID"] = uuid()),
-    (paytmParams["CUST_ID"] = "Cust_id"),
+    (paytmParams["CUST_ID"] = `wdc2023${uuid()}`),
     (paytmParams["CALLBACK_URL"] = "http://localhost:4119/callback");
   paytmParams["TXN_AMOUNT"] = request.body.amount;
 
