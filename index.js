@@ -221,7 +221,7 @@ app.post("/api/photo", uploads2.single("file"), async(req, res) => {
 
 });
 
-const storages3 = multer.diskStorage({
+const storages3 = multer.diskStorage({  
   destination: (req, file, cb) => {
     cb(null, "cv");
   },
