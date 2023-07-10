@@ -208,7 +208,7 @@ app.post("/api/photo", uploads2.single("file"), async(req, res) => {
 
     // Upload the file to Azure Storage Blob
     const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
+  
     // // Delete the temporary file
     // fs.unlinkSync(file.path);
 
