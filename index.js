@@ -209,7 +209,7 @@ app.post("/api/photo", uploads2.single("file"), async(req, res) => {
 
     // Upload the file to Azure Storage Blob
     const uploadResponse = await blockBlobClient.uploadFile(file.path);
-
+  
     // // Delete the temporary file
     // fs.unlinkSync(file.path);
 
@@ -222,7 +222,7 @@ app.post("/api/photo", uploads2.single("file"), async(req, res) => {
 
 });
 
-const storages3 = multer.diskStorage({
+const storages3 = multer.diskStorage({  
   destination: (req, file, cb) => {
     cb(null, "cv");
   },
