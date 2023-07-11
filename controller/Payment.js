@@ -46,7 +46,7 @@ const addPaymentGateway = async (request, response) => {
     (paytmParams["INDUSTRY_TYPE_ID"] = process.env.INDUSTRY_TYPE_ID),
     (paytmParams["ORDER_ID"] = uuid()),
     (paytmParams["CUST_ID"] = `wdc2023${uuid()}`),
-    (paytmParams["CALLBACK_URL"] = "http://localhost:4119/callback");
+    (paytmParams["CALLBACK_URL"] = "https://wdc-back-aqw5.onrender.com/callback");
   paytmParams["TXN_AMOUNT"] = request.body.amount;
 
   const paytmCheckSum = await paytmchecksum.generateSignature(
@@ -88,7 +88,7 @@ const addPaymentGateway = async (request, response) => {
     };
     response.json(params);
 
-    axios.post("http://localhost:4119/router/register", params, {
+    axios.post("https://wdc-back-aqw5.onrender.com/router/register", params, {
       "content-type": "application/json",
     });
 
