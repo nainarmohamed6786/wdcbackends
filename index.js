@@ -100,6 +100,7 @@ app.post("/api/upload", upload.single("file"), async(req, res) => {
     console.error('Error uploading file:', error);
     res.status(500).send('An error occurred while uploading the file.');
   }
+
 });
 
 const storages = multer.diskStorage({
@@ -296,6 +297,7 @@ app.post("/api/biography", uploads4.single("file"), async(req, res) => {
     console.error('Error uploading file:', error);
     res.status(500).send('An error occurred while uploading the file.');
   }
+
 });
 
 app.use("/router", authRouter);
