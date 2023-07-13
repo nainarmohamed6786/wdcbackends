@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:"",
     },
+    TotalAmounts:{
+    type:String,
+    default:""
+    },
     yearofStudy: {
       type: String,
       default: "",

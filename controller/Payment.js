@@ -37,6 +37,7 @@ const addPaymentGateway = async (request, response) => {
   var AccompanyCount = request.body.AccompanyCount;
   var TotalAmount = request.body.TotalAmount;
   var CVFiles = request.body.CVFiles;
+  var TotalAmounts = request.body.TotalAmounts;
  
   let paytmMerchantkey = process.env.KEY;
   let paytmParams = {};
@@ -80,6 +81,7 @@ const addPaymentGateway = async (request, response) => {
       Speciality: Speciality,
       Presentation: Presentation,
       Speak: Speak,
+      TotalAmounts:TotalAmounts,
       biographyFiles: biographyFiles,
       subjectofPresentation: subjectofPresentation,
       AccompanyCount: AccompanyCount,
@@ -249,6 +251,10 @@ const paymentResponse = (request, response) => {
                                 .text("Transaction Amount", 50, customerInformationTop + 90)
                                 .font("Helvetica")
                                 .text(`: ${docs.TotalAmount}`,150,customerInformationTop + 90)
+                                .font("Helvetica-Bold")
+                                .text("Total Amount", 50, customerInformationTop + 90)
+                                .font("Helvetica")
+                                .text(`: ${docs.TotalAmounts}`,150,customerInformationTop + 90)
                                 .font("Helvetica-Bold")
                                 .text("Transaction ID", 50, customerInformationTop + 105)
                                 .font("Helvetica")
