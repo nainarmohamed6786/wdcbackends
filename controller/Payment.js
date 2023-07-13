@@ -252,10 +252,6 @@ const paymentResponse = (request, response) => {
                                 .font("Helvetica")
                                 .text(`: ${docs.TotalAmount}`,150,customerInformationTop + 90)
                                 .font("Helvetica-Bold")
-                                .text("Total Amount", 50, customerInformationTop + 90)
-                                .font("Helvetica")
-                                .text(`: ${docs.TotalAmounts}`,150,customerInformationTop + 90)
-                                .font("Helvetica-Bold")
                                 .text("Transaction ID", 50, customerInformationTop + 105)
                                 .font("Helvetica")
                                 .text(`: ${docs.TXNID}`,150,customerInformationTop + 105)
@@ -275,7 +271,10 @@ const paymentResponse = (request, response) => {
                                 .text("Transaction Date", 50, customerInformationTop + 165)
                                 .font("Helvetica")
                                 .text(`: ${docs.TXNDATE}`,150,customerInformationTop + 165)
-                            
+                                .font("Helvetica-Bold")
+                                .text("Total Amount", 50, customerInformationTop + 180)
+                                .font("Helvetica")
+                                .text(`: ${docs.TotalAmounts}`,150,customerInformationTop + 180)
                                 .moveDown();
                             
                             }
