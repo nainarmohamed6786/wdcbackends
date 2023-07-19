@@ -20,22 +20,22 @@ router.post("/register", async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(passwordss, salt);
 
-    req.body.password = username;
+    // req.body.password = username;
 
-    // const Users = new userSchema({
-    //   ...req.body,
-    //   password: hash,
-    // });
-
-    // const savedUser = await Users.save();
-
-    const emails={email:req.body.email}
-    const update = { $set: {
+    const Users = new userSchema({
       ...req.body,
       password: hash,
-    }};
-    const options = {upsert: true};
-    const savedUser=await userSchema.updateOne(emails, update, options)
+    });
+
+    const savedUser = await Users.save();
+
+    // const emails={email:req.body.email}
+    // const update = { $set: {
+    //   ...req.body,
+    //   password: hash,
+    // }};
+    // const options = {upsert: true};
+    // const savedUser=await userSchema.updateOne(emails, update, options)
 
 
     console.log(savedUser);
