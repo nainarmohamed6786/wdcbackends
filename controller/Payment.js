@@ -357,7 +357,7 @@ const paymentResponse = (request, response) => {
                 alert("Your Transaction is Failure")
             }
 
-            response.redirect(`https://worlddentalconference.co.in/Login`);
+            response.redirect(`https://worlddentalconference.co.in/registration`);
           });
         });
 
