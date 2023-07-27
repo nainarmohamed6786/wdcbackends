@@ -4,11 +4,23 @@ const Accompany = require("../models/Accompany");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const newAccompany = new Accompany(req.body);
+  // const newAccompany = new Accompany(req.body);
   try {
-    const savedAccompany = await newAccompany.save();
 
-    res.status(200).json(savedAccompany);
+        const emails={email:req.body.email}
+    const update = { $set: {
+      inputFields:{
+        emailAddress:req.body.emailAddress,
+        fullName:req.body.fullName
+      }
+    }};
+    const options = {upsert: true};
+    const savedUser=await Accompany.updateOne(emails, update, options)
+
+
+    // const savedAccompany = await newAccompany.save();
+
+    res.status(200).json(savedUser);
   } catch (err) {
     res.status(400).json(err);
   }
