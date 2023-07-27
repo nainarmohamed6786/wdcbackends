@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
     const options = {upsert: true};
     const savedUser=await Accompany.updateOne(emails, update, options)
 
-
     // const savedAccompany = await newAccompany.save();
 
     res.status(200).json(savedUser);
